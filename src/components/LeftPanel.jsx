@@ -80,7 +80,7 @@ const LeftPanel = () => {
   const TitleText = ({ title, hasEdit }) => (
     <div className="w-full items-center flex justify-between px-4 text-xs font-bold mt-6 mb-2 font-nanum">
       <p className="text-gray-500">{title}</p>
-      {hasEdit && <button className="flex-shrink-0 text-blue-500">설정</button>}
+      {hasEdit && <button className="flex-shrink-0 text-blue-500">수정</button>}
     </div>
   );
 
@@ -118,7 +118,7 @@ const LeftPanel = () => {
   );
 
   return (
-    <div className="w-64 h-screen flex-shrink-0 flex flex-col justify-between overflow-hidden">
+    <div className="w-64 h-screen flex-shrink-0 flex flex-col justify-between overflow-hidden border-r">
       <CompanyCell />
 
       <div className="overflow-y-auto h-full py-2">

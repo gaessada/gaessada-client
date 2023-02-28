@@ -23,7 +23,7 @@ const RightPanel = () => {
     );
     return (
       <div className="w-80 h-screen flex-shrink-0 p-5 py-4">
-        <p className="font-nanum text-lg font-bold mb-4">알림</p>
+        <p className="font-nanum text-lg font-bold mb-4">히스토리</p>
         <Cell type={0} />
         <Cell type={1} />
       </div>
@@ -31,21 +31,23 @@ const RightPanel = () => {
   };
 
   return (
-    <Routes>
-      <Route path="/*" element={<Main />} />
-      <Route
-        path="/daily-report"
-        element={
-          <div className="w-80 h-screen bg-gray-100 flex-shrink-0"></div>
-        }
-      />
-      <Route
-        path="/feedback"
-        element={
-          <div className="w-80 h-screen bg-gray-100 flex-shrink-0"></div>
-        }
-      />
-    </Routes>
+    <div className="border-l">
+      <Routes>
+        <Route path="/*" element={<Main />} />
+        <Route
+          path="/daily-report"
+          element={
+            <div className="w-80 h-screen bg-gray-100 flex-shrink-0"></div>
+          }
+        />
+        <Route
+          path="/feedback"
+          element={
+            <div className="w-80 h-screen bg-gray-100 flex-shrink-0"></div>
+          }
+        />
+      </Routes>
+    </div>
   );
 };
 

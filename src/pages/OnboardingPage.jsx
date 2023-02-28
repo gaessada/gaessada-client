@@ -3,7 +3,7 @@ import Navbar from "../components/Navbar";
 import Sample2 from "../assets/sample2.png";
 import { useNavigate } from "react-router-dom";
 
-const SignIn = () => {
+const OnboardingPage = () => {
   const navigate = useNavigate();
   const RightSection = () => (
     <div className="hidden sm:flex h-screen items-center flex-col w-1/2 justify-center bg-gradient-to-b from-green-900 to-emerald-900 flex-shrink-0">
@@ -77,4 +77,4 @@ const SignIn = () => {
   );
 };
 
-export default SignIn;
+export default OnboardingPage;
