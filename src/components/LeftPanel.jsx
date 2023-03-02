@@ -145,7 +145,8 @@ const LeftPanel = () => {
         <TitleText title="직원 (1)" />
         <EmployeeCell name={"Ahmad Algazali"} />
         <EmployeeCell name={"직원 2"} />
-
+      </div>
+      <div className="pb-3 border-t">
         <TitleText title="주요 링크" hasEdit />
         <LinkCell title="PC 링크" icon={<AiOutlineLink />} />
         <LinkCell title="모바일 링크" icon={<AiOutlineLink />} />
