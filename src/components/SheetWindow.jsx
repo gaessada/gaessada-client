@@ -4,12 +4,12 @@ import {useEffect, useRef} from "react";
 
 
 const SheetWindow = (props) => {
-    const containerMain = useRef(null);
+    const containerRef = useRef(null);
 
     useEffect(() => {
         props.hotRef.current?.destroy()
 
-        props.hotRef.current = new Handsontable(containerMain.current, {
+        props.hotRef.current = new Handsontable(containerRef.current, {
             manualColumnResize: true,
             colHeaders: true,
             rowHeaders: true,
@@ -20,7 +20,7 @@ const SheetWindow = (props) => {
         })
     }, [])
 
-    return <div ref={containerMain}/>
+    return <div ref={containerRef}/>
 }
 
 export default SheetWindow
