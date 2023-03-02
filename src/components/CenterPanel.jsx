@@ -1,11 +1,9 @@
 import React from "react";
-import {useRef} from "react";
 import { Route, Routes } from "react-router-dom";
 import DefaultUser from "../assets/default_user.png";
-import SheetWindow from "./SheetWindow";
+import FeedbackPage from "../pages/FeedbackPage";
 
 const CenterPanel = () => {
-  const hotRef = useRef(null)
   const Main = () => {
     const Header = () => (
       <div className="w-full h-14 border-b flex items-center px-4 font-nanum justify-between">
@@ -66,7 +64,6 @@ const CenterPanel = () => {
           <TitleText title="업무일지" />
 
           <TitleText title="체크사항" />
-          <SheetWindow hotRef={hotRef}/>
         </div>
       </div>
     );
@@ -81,7 +78,7 @@ const CenterPanel = () => {
       />
       <Route
         path="/feedback"
-        element={<div className="w-full h-screen bg-gray-400">456</div>}
+        element={<FeedbackPage />}
       />
     </Routes>
   );
