@@ -6,9 +6,11 @@ import DefaultUser from "../assets/default_user.png";
 import SheetWindow from "./SheetWindow";
 import { GrDocumentNotes } from "react-icons/gr";
 import { MdPendingActions } from "react-icons/md";
+import FeedbackPage from "../pages/FeedbackPage";
 
 const CenterPanel = () => {
   const hotRef = useRef(null);
+
   const Main = () => {
     const Header = () => (
       <div className="w-full h-14 border-b flex items-center px-4 font-nanum justify-between">
@@ -145,7 +147,6 @@ const CenterPanel = () => {
           <DailyReport />
           <TitleText title="체크사항" />
           <div> 진행중 & 승인 대기중만 보임 (엑셀 x)</div>
-          <SheetWindow hotRef={hotRef} />
         </div>
       </div>
     );
@@ -178,7 +179,7 @@ const CenterPanel = () => {
       <Route path="/daily-report" element={<Report />} />
       <Route
         path="/feedback"
-        element={<div className="w-full h-screen bg-gray-400">456</div>}
+        element={<FeedbackPage />}
       />
     </Routes>
   );

@@ -10,15 +10,18 @@ const SheetWindow = (props) => {
         props.hotRef.current?.destroy()
 
         props.hotRef.current = new Handsontable(containerRef.current, {
+            data: props.hotDataRef.current,
+            columns: ['A', 'B', 'C', 'D', 'E'],
+            stretchH: 'all',
             manualColumnResize: true,
             colHeaders: true,
             rowHeaders: true,
-            width: 1000,
-            height: 500,
+            width: props.hotRefSize.width,
+            height: props.hotRefSize.height * 0.5,
             minSpareRows: 2,
             contextMenu: ['row_above', 'row_below', 'remove_row'],
         })
-    }, [])
+    }, [props.hotRef, props.hotRefSize, props.hotDataRef])
 
     return <div ref={containerRef}/>
 }
