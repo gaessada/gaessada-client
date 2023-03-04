@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import FeedbackPage from "../pages/FeedbackPage";
+import CenterPanelFeedback from "./CenterPanelFeedback";
 import CenterPanelMain from "./CenterPanelMain";
 import CenterPanelReport from "./CenterPanelReport";
 
@@ -9,7 +9,7 @@ const CenterPanel = () => {
     <Routes>
       <Route path="/*" element={<CenterPanelMain />} />
       <Route path="/daily-report" element={<CenterPanelReport />} />
-      <Route path="/feedback" element={<FeedbackPage />} />
+      <Route path="/feedback" element={<CenterPanelFeedback />} />
     </Routes>
   );
 };

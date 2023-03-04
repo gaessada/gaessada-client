@@ -4,6 +4,7 @@ import DefaultUser from "../assets/default_user.png";
 import { GrDocumentNotes } from "react-icons/gr";
 import { MdPendingActions } from "react-icons/md";
 import { useNavigate } from "react-router";
+import { BsArrowReturnRight } from "react-icons/bs";
 
 const CenterPanelMain = () => {
   const navigate = useNavigate();
@@ -145,24 +146,96 @@ const CenterPanelMain = () => {
       { type: 0, title: "승인 대기중" },
       { type: 1, title: "진행중" },
     ];
-    const [selectedButton, setSelectedButton] = useState(0);
+    const [selectedButton, setSelectedButton] = useState("승인 대기중");
     const OptionButton = ({ type, title }) => (
       <button
-        onClick={() => setSelectedButton(type)}
+        onClick={() => setSelectedButton(title)}
         className={`px-3 h-8 rounded-lg text-sm font-nanum ${
-          selectedButton === type ? "bg-blue-500 text-white" : "hover:bg-gray-100 border"
+          selectedButton === title
+            ? "bg-blue-600 text-white"
+            : "hover:bg-gray-100 border"
         }`}
       >
         {title}
       </button>
     );
 
-    const Cell = () => (
-      <div className="w-full h-24 bg-gray-100 rounded-lg flex items-center px-6">
-        <div className="">#1</div>
-        {/* <div>image</div> */}
+    const Reply = ({ isRecent, date, title }) => (
+      <div className="flex flex-shrink-0 my-1">
+        <BsArrowReturnRight className="text-gray-500 text-xs" />
+        <div className="ml-2">
+          <p
+            className={`text-xs font-bold ${
+              isRecent ? "text-red-500" : "text-gray-500"
+            }`}
+          >
+            {date}
+          </p>
+          <p className="text-sm mt-1">{title}</p>
+        </div>
       </div>
-    )
+    );
+
+    const Cell = ({ num, hasReply, title, status }) => (
+      <div className="w-full py-2 border-b flex items-center justify-between font-nanum text-sm">
+        <div className="flex">
+          <div className="w-16 flex items-center justify-center text-xs flex-shrink-0">
+            {num}
+          </div>
+          <div className="w-20 flex items-center justify-center flex-shrink-0 text-center break-keep text-xs">
+            {status}
+          </div>
+          <div className="w-32 flex items-center justify-center flex-shrink-0">
+            <button className="w-20 h-20 flex items-center justify-center hover:bg-gray-100 border rounded transition">
+              캡쳐화면
+            </button>
+          </div>
+          <div className="w-full flex flex-col justify-center px-4">
+            <p className="my-2">{title}</p>
+            {hasReply && (
+              <>
+                <Reply
+                  date={"2023-03-02"}
+                  title="아직도 가로 크기가 작습니다"
+                />
+                <Reply isRecent date={"2023-03-04"} title="아직도!!!!" />
+              </>
+            )}
+          </div>
+        </div>
+        {status === "승인 대기중" && (
+          <div className="w-24 flex flex-col space-y-1 text-xs">
+            <button className="w-full h-8 rounded-lg border bg-blue-600 hover:bg-blue-400 text-white font-bold transition">
+              승인
+            </button>
+            <button className="w-full h-8 rounded-lg border text-red-600 font-bold border-red-300 hover:bg-red-600 hover:text-white transition">
+              재요청 및 댓글
+            </button>
+          </div>
+        )}
+      </div>
+    );
+
+    const TableHeader = ({ status }) => (
+      <div className="flex items-center justify-between text-xs font-nanum h-8 border-b">
+        <div className="flex">
+          <div className="w-16 flex items-center justify-center flex-shrink-0">
+            번호
+          </div>
+          <div className="w-20 flex items-center justify-center flex-shrink-0">
+            상태
+          </div>
+          <div className="w-32 flex items-center justify-center flex-shrink-0">
+            캡쳐화면
+          </div>
+          <div className="w-full flex items-center px-4">설명</div>
+        </div>
+        {status === "승인 대기중" && (
+          <div className="w-24 flex justify-center">액션</div>
+        )}
+      </div>
+    );
+
     return (
       <div>
         <div className="flex space-x-1 mb-4">
@@ -170,8 +243,15 @@ const CenterPanelMain = () => {
             <OptionButton type={item.type} title={item.title} />
           ))}
         </div>
-        진행중 & 승인 대기중만 보임 (엑셀 x)
-        <Cell />
+
+        <TableHeader status={selectedButton} />
+        <Cell
+          num={12}
+          hasReply
+          title={"이 부분은 가로 크기가 커져야 합니다"}
+          status={selectedButton}
+        />
+        <Cell num={230} title={"이미지 교체 바람"} status={selectedButton} />
       </div>
     );
   };

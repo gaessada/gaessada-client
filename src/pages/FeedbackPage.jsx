@@ -1,30 +1,36 @@
-import {useEffect, useRef, useState} from "react";
-import '../css/Handsontable.css'
+import { useEffect, useRef, useState } from "react";
+import "../css/Handsontable.css";
 import SheetWindow from "../components/SheetWindow";
-import {v4} from "uuid";
-
+import { v4 } from "uuid";
 
 const FeedbackPage = () => {
-    const pageRef = useRef(null)
-    const [pageRefSize, setPageRefSize] = useState({width: 0, height: 0})
-    const hotRef = useRef(null)
-    const hotDataRef = useRef(Array.from({length: 100}, () => ({rowId: v4()})))
+  const pageRef = useRef(null);
+  const [pageRefSize, setPageRefSize] = useState({ width: 0, height: 0 });
+  const hotRef = useRef(null);
+  const hotDataRef = useRef(
+    Array.from({ length: 100 }, () => ({ rowId: v4() }))
+  );
 
-    useEffect(() => {
-        const observer = new ResizeObserver((entries) => {
-            for (let entry of entries) {
-                const {width, height} = entry.contentRect;
-                setPageRefSize({...pageRefSize, width: width, height: height})
-            }
-        });
-        observer.observe(pageRef.current);
-        return () => observer.disconnect()
-    }, []);
+  useEffect(() => {
+    const observer = new ResizeObserver((entries) => {
+      for (let entry of entries) {
+        const { width, height } = entry.contentRect;
+        setPageRefSize({ ...pageRefSize, width: width, height: height });
+      }
+    });
+    observer.observe(pageRef.current);
+    return () => observer.disconnect();
+  }, []);
 
-    return <div ref={pageRef} className={'w-full h-screen bg-gray-300'}>
-        <div style={{display: 'flex', justifyContent: 'center', alignItems: 'center', height: '10%'}}>SHEET</div>
-        <SheetWindow hotRef={hotRef} hotRefSize={pageRefSize} hotDataRef={hotDataRef}/>
+  return (
+    <div ref={pageRef} className={"w-full h-full"}>
+      <SheetWindow
+        hotRef={hotRef}
+        hotRefSize={pageRefSize}
+        hotDataRef={hotDataRef}
+      />
     </div>
-}
+  );
+};
 
-export default FeedbackPage
+export default FeedbackPage;

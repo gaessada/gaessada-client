@@ -12,7 +12,7 @@ const RightPanel = () => {
         <Route
           path="/feedback"
           element={
-            <div className="w-80 h-screen bg-gray-100 flex-shrink-0"></div>
+            <div></div>
           }
         />
       </Routes>
