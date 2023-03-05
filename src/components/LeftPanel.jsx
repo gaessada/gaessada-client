@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   AiFillBook,
   AiFillGithub,
@@ -12,16 +12,26 @@ import {
   RiHome5Fill,
   RiHome5Line,
 } from "react-icons/ri";
+import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import DefaultUser from "../assets/default_user.png";
 
 const LeftPanel = () => {
   const naviate = useNavigate();
   const pathname = window.location.pathname; //returns the current url minus the domain name
+  const [companyModalOpen, setCompanyModalOpen] = useState(false);
   const CompanyCell = () => (
-    <div className="h-14 w-full bg-white hover:bg-gray-100 transition border-b flex items-center px-4 cursor-pointer flex-shrink-0">
-      <img src={DefaultUser} className="w-8 h-8 rounded-full" alt="" />
-      <div className="ml-2">
+    <button
+      onClick={() => setCompanyModalOpen(true)}
+      className="h-14 w-full bg-white hover:bg-gray-100 transition border-b flex items-center px-4 cursor-pointer flex-shrink-0"
+    >
+      <img
+        src={DefaultUser}
+        className="w-8 h-8 rounded-full"
+        alt=""
+        draggable={false}
+      />
+      <div className="ml-3 flex flex-col items-start">
         <p className="font-bold text-xs">주식회사 픽톨로지</p>
         <p
           style={{
@@ -34,7 +44,7 @@ const LeftPanel = () => {
           Since 2004
         </p>
       </div>
-    </div>
+    </button>
   );
 
   const MenuButton = ({
@@ -46,7 +56,9 @@ const LeftPanel = () => {
   }) => (
     <button
       onClick={() => naviate(path)}
-      className={`${pathname === path ? "bg-gray-100" : "hover:bg-gray-100"} w-full h-14 flex items-center px-6 transition font-poppins`}
+      className={`${
+        pathname === path ? "bg-gray-100" : "hover:bg-gray-100"
+      } w-full h-14 flex items-center px-6 transition font-poppins`}
     >
       <div className="flex-shrink-0">
         {pathname === path ? highlightIcon : icon}
@@ -86,7 +98,12 @@ const LeftPanel = () => {
 
   const EmployeeCell = ({ name }) => (
     <button className="w-full h-14 flex items-center px-4 hover:bg-gray-100 transition">
-      <img src={DefaultUser} className="w-8 h-8 rounded-full" alt="" />
+      <img
+        src={DefaultUser}
+        className="w-8 h-8 rounded-full"
+        alt=""
+        draggable={false}
+      />
       <p className={`ml-3 text-xs`}>{name}</p>
     </button>
   );
@@ -99,9 +116,14 @@ const LeftPanel = () => {
   );
 
   const MyProfileCell = () => (
-    <div className="h-14 w-full bg-white hover:bg-gray-100 transition border-t flex items-center px-4 cursor-pointer flex-shrink-0">
-      <img src={DefaultUser} className="w-8 h-8 rounded-full" alt="" />
-      <div className="ml-2">
+    <button className="h-14 w-full bg-white hover:bg-gray-100 transition border-t flex items-center px-4 cursor-pointer flex-shrink-0">
+      <img
+        src={DefaultUser}
+        className="w-8 h-8 rounded-full"
+        alt=""
+        draggable={false}
+      />
+      <div className="ml-3 flex flex-col items-start">
         <p className="font-bold text-xs">내 프로필</p>
         <p
           style={{
@@ -114,12 +136,55 @@ const LeftPanel = () => {
           Online
         </p>
       </div>
-    </div>
+    </button>
   );
 
   return (
     <div className="w-64 h-screen flex-shrink-0 flex flex-col justify-between overflow-hidden border-r">
       <CompanyCell />
+      <ReactModal
+        shouldCloseOnOverlayClick={true}
+        onRequestClose={() => setCompanyModalOpen(false)}
+        style={{
+          overlay: {
+            position: "fixed",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            backgroundColor: "rgba(0, 0, 0, 0.7)",
+            // display: "flex",
+            // flexDirection: "row",
+            // alignItems: "center",
+            // justifyContent: "center",
+          },
+          content: {
+            // WebkitOverflowScrolling: "touch",
+            backgroundColor: "white",
+            // border: "none",
+            width: "40vw",
+            height: "40vh",
+            display: "flex",
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            marginTop: "auto",
+            marginBottom: "auto",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+          },
+        }}
+        isOpen={companyModalOpen}
+      >
+        <div
+          style={{ border: "1px solid #ccc" }}
+          className="w-80 bg-red-100 h-full"
+        >
+          <button onClick={() => setCompanyModalOpen(false)}>Close</button>
+        </div>
+      </ReactModal>
 
       <div className="overflow-y-auto h-full">
         <MenuButton
@@ -142,7 +207,7 @@ const LeftPanel = () => {
           notificationCount={3}
         />
 
-        <TitleText title="직원 (1)" />
+        <TitleText title="직원 (2)" />
         <EmployeeCell name={"Ahmad Algazali"} />
         <EmployeeCell name={"직원 2"} />
       </div>
