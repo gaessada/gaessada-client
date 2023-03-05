@@ -55,12 +55,12 @@ const CenterPanelFeedback = () => {
       <div className="flex items-center space-x-1">
         {/* <p className="ml-3 font-bold cursor-default mr-4">체크사항</p> */}
         {tabArray.map((item) => (
-          <TabButton title={item.title} id={item.id} notification={item.notification} />
+          <TabButton title={item.title} id={item.id} key={item.id} notification={item.notification} />
         ))}
       </div>
       <div className="flex items-center space-x-2">
         {employeeArray.map((item) => (
-          <EmployeeCell name={item.name} uid={item.uid} />
+          <EmployeeCell name={item.name} uid={item.uid} key={item.uid} />
         ))}
       </div>
     </div>
