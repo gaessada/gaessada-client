@@ -9,7 +9,7 @@ import { BsArrowReturnRight } from "react-icons/bs";
 const CenterPanelMain = () => {
   const navigate = useNavigate();
   const Header = () => (
-    <div className="w-full h-14 border-b flex items-center px-4 font-nanum justify-between">
+    <div className="w-full h-14 border-b flex items-center px-8 font-nanum justify-between">
       <div className="flex items-center">
         <div className="px-3 py-1 font-nanum font-bold text-xs text-white bg-gray-500 rounded-lg cursor-default">
           목표
@@ -20,8 +20,7 @@ const CenterPanelMain = () => {
         </button>
       </div>
       <div className="flex items-center">
-        <p className="font-bold text-xs">관리자</p>
-        <img src={DefaultUser} className="w-5 h-5 rounded-full ml-3" alt="" />
+        <p className="font-bold text-sm italic text-gray-500">관리자 PORTAL</p>
       </div>
     </div>
   );
@@ -94,21 +93,25 @@ const CenterPanelMain = () => {
             {!pending && <p className="text-xs">{moment().fromNow()}</p>}
           </div>
           {pending ? (
-            <div className="mt-3 w-64 h-16 bg-gray-100 rounded-xl flex items-center px-4 text-zinc-500">
+            <div className="mt-3 w-72 h-16 bg-gray-100 rounded-xl flex items-center px-4 text-zinc-500">
               <MdPendingActions size={20} />
               <div className="ml-3">
                 <p className="font-semibold text-xs ">업로드 전</p>
               </div>
             </div>
           ) : (
-            <div className="mt-3 w-64 h-16 bg-white border shadow rounded-xl flex items-center px-4 hover:bg-gray-100 transition cursor-pointer relative">
+            <div className="mt-3 w-72 h-16 bg-white border shadow rounded-xl flex items-center px-4 hover:bg-gray-100 transition cursor-pointer relative">
               <GrDocumentNotes size={20} />
               <div className="ml-3">
                 <div className="text-xs font-semibold">
                   <div className="inline w-4 h-4 bg-red-500"></div>
-                  {"2023-03-02 업무일지"}
+                  {"2023년 3월 2일 업무일지"}
                 </div>
-                <p className="text-xs text-gray-500">{name}</p>
+                <div className="text-xs flex text-gray-500 mt-1">
+                  <p className="text-xs">
+                    {moment().format("제출 M월 D일 a h:mm")}
+                  </p>
+                </div>
               </div>
 
               {checkType !== null && (
@@ -119,7 +122,7 @@ const CenterPanelMain = () => {
             </div>
           )}
           {!pending && (
-            <div className="flex space-x-2">
+            <div className="flex space-x-2 mt-1">
               {actionArray.map((item) => (
                 <ActionButton
                   key={item.type}
@@ -135,7 +138,7 @@ const CenterPanelMain = () => {
     };
 
     return (
-      <div className="flex space-x-2">
+      <div className="flex space-x-4">
         <Cell name={"Sereen"} />
         <Cell name={"Ahmad"} pending />
       </div>
@@ -260,9 +263,9 @@ const CenterPanelMain = () => {
   const Divider = () => <div className="w-full h-px border-t my-8"></div>;
 
   return (
-    <div className="w-full h-screen">
+    <div className="w-full h-screen overflow-y-auto">
       <Header />
-      <div className="px-6">
+      <div className="px-8">
         <TitleText title="단기목표" hasEdit />
         <ShortTermGoal />
         <Divider />

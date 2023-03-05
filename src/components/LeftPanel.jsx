@@ -46,7 +46,7 @@ const LeftPanel = () => {
   }) => (
     <button
       onClick={() => naviate(path)}
-      className="w-full h-12 flex items-center px-6 hover:bg-gray-100 transition font-poppins"
+      className={`${pathname === path ? "bg-gray-100" : "hover:bg-gray-100"} w-full h-14 flex items-center px-6 transition font-poppins`}
     >
       <div className="flex-shrink-0">
         {pathname === path ? highlightIcon : icon}
@@ -121,7 +121,7 @@ const LeftPanel = () => {
     <div className="w-64 h-screen flex-shrink-0 flex flex-col justify-between overflow-hidden border-r">
       <CompanyCell />
 
-      <div className="overflow-y-auto h-full py-2">
+      <div className="overflow-y-auto h-full">
         <MenuButton
           title="홈 피드"
           icon={<RiHome5Line />}
