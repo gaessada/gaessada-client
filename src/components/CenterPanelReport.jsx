@@ -30,7 +30,7 @@ const CenterPanelReport = () => {
       </div>
       <div className="flex items-center space-x-2">
         {employeeArray.map((item) => (
-          <EmployeeCell name={item.name} uid={item.uid} />
+          <EmployeeCell name={item.name} uid={item.uid} key={item.uid} />
         ))}
       </div>
     </div>

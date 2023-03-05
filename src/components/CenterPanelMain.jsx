@@ -122,6 +122,7 @@ const CenterPanelMain = () => {
             <div className="flex space-x-2">
               {actionArray.map((item) => (
                 <ActionButton
+                  key={item.type}
                   type={item.type}
                   emoji={item.emoji}
                   text={item.text}
@@ -240,7 +241,7 @@ const CenterPanelMain = () => {
       <div>
         <div className="flex space-x-1 mb-4">
           {optionsArray.map((item) => (
-            <OptionButton type={item.type} title={item.title} />
+            <OptionButton type={item.type} title={item.title} key={item.type} />
           ))}
         </div>
 
