@@ -12,7 +12,6 @@ const SheetWindow = (props) => {
         props.hotRef.current = new Handsontable(containerRef.current, {
             data: props.hotDataRef.current,
             columns: ['A', 'B', 'C','D'],
-            colWidths:[1,1,6,1],
             rowHeights: 100,
             stretchH: 'all',
             manualColumnResize: true,

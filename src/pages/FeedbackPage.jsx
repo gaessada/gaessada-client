@@ -15,12 +15,12 @@ const FeedbackPage = () => {
         const observer = new ResizeObserver((entries) => {
             for (let entry of entries) {
                 const {width, height} = entry.contentRect;
-                setPageRefSize({...pageRefSize, width: width, height: height});
+                setPageRefSize({width: width, height: height})
             }
         });
         observer.observe(pageRef.current);
         return () => observer.disconnect();
-    }, [pageRefSize]);
+    }, []);
 
     return (
         <div ref={pageRef} className={"w-full h-full"}>
