@@ -12,14 +12,17 @@ import {
   RiHome5Fill,
   RiHome5Line,
 } from "react-icons/ri";
-import ReactModal from "react-modal";
 import { useNavigate } from "react-router-dom";
 import DefaultUser from "../assets/default_user.png";
+import ModalContainer from "./ModalContainer";
+import CompanyModal from "./modals/CompanyModal";
+import MyProfileModal from "./modals/MyProfileModal";
 
 const LeftPanel = () => {
   const naviate = useNavigate();
   const pathname = window.location.pathname; //returns the current url minus the domain name
   const [companyModalOpen, setCompanyModalOpen] = useState(false);
+  const [myProfileModalOpen, setMyProfileModalOpen] = useState(false);
   const CompanyCell = () => (
     <button
       onClick={() => setCompanyModalOpen(true)}
@@ -27,7 +30,7 @@ const LeftPanel = () => {
     >
       <img
         src={DefaultUser}
-        className="w-8 h-8 rounded-full"
+        className="w-8 h-8 rounded"
         alt=""
         draggable={false}
       />
@@ -116,7 +119,10 @@ const LeftPanel = () => {
   );
 
   const MyProfileCell = () => (
-    <button className="h-14 w-full bg-white hover:bg-gray-100 transition border-t flex items-center px-4 cursor-pointer flex-shrink-0">
+    <button
+      onClick={() => setMyProfileModalOpen(true)}
+      className="h-14 w-full bg-white hover:bg-gray-100 transition border-t flex items-center px-4 cursor-pointer flex-shrink-0"
+    >
       <img
         src={DefaultUser}
         className="w-8 h-8 rounded-full"
@@ -142,50 +148,18 @@ const LeftPanel = () => {
   return (
     <div className="w-64 h-screen flex-shrink-0 flex flex-col justify-between overflow-hidden border-r">
       <CompanyCell />
-      <ReactModal
-        shouldCloseOnOverlayClick={true}
-        onRequestClose={() => setCompanyModalOpen(false)}
-        style={{
-          overlay: {
-            position: "fixed",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: "rgba(0, 0, 0, 0.7)",
-            // display: "flex",
-            // flexDirection: "row",
-            // alignItems: "center",
-            // justifyContent: "center",
-          },
-          content: {
-            // WebkitOverflowScrolling: "touch",
-            backgroundColor: "white",
-            // border: "none",
-            width: "40vw",
-            height: "40vh",
-            display: "flex",
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            marginTop: "auto",
-            marginBottom: "auto",
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-          },
-        }}
-        isOpen={companyModalOpen}
-      >
-        <div
-          style={{ border: "1px solid #ccc" }}
-          className="w-80 bg-red-100 h-full"
-        >
-          <button onClick={() => setCompanyModalOpen(false)}>Close</button>
-        </div>
-      </ReactModal>
-
+      <ModalContainer
+        modalTitle="기업정보"
+        isVisible={companyModalOpen}
+        setVisible={setCompanyModalOpen}
+        children={<CompanyModal />}
+      />
+      <ModalContainer
+        modalTitle="내 프로필"
+        isVisible={myProfileModalOpen}
+        setVisible={setMyProfileModalOpen}
+        children={<MyProfileModal />}
+      />
       <div className="overflow-y-auto h-full">
         <MenuButton
           title="홈 피드"
@@ -211,8 +185,8 @@ const LeftPanel = () => {
         <EmployeeCell name={"Ahmad Algazali"} />
         <EmployeeCell name={"직원 2"} />
       </div>
-      <div className="pb-3 border-t">
-        <TitleText title="주요 링크" hasEdit />
+      <div className="pb-3">
+        <TitleText title="주요 링크" />
         <LinkCell title="PC 링크" icon={<AiOutlineLink />} />
         <LinkCell title="모바일 링크" icon={<AiOutlineLink />} />
         <LinkCell title="구글 드라이브" icon={<RiDriveFill />} />

@@ -1,13 +1,18 @@
 import moment from "moment/moment";
 import React, { useState } from "react";
 import DefaultUser from "../assets/default_user.png";
-import { GrDocumentNotes } from "react-icons/gr";
 import { MdPendingActions } from "react-icons/md";
 import { useNavigate } from "react-router";
 import { BsArrowReturnRight } from "react-icons/bs";
+import ModalContainer from "./ModalContainer";
+import GoalModal from "./modals/GoalModal";
+import MilestoneModal from "./modals/MilestoneModal";
+import DailyReportCell from "./DailyReportCell";
 
 const CenterPanelMain = () => {
   const navigate = useNavigate();
+  const [goalModalOpen, setGoalModalOpen] = useState(false);
+  const [milestoneModalOpen, setMilestoneModalOpen] = useState(false);
   const Header = () => (
     <div className="w-full h-14 border-b flex items-center px-8 font-nanum justify-between">
       <div className="flex items-center">
@@ -15,7 +20,10 @@ const CenterPanelMain = () => {
           목표
         </div>
         <p className="ml-3 font-bold cursor-default">7월까지 사이트 완성</p>
-        <button className="flex-shrink-0 text-blue-500 text-xs font-bold ml-4">
+        <button
+          onClick={() => setGoalModalOpen(true)}
+          className="flex-shrink-0 text-blue-500 text-xs font-bold ml-4"
+        >
           수정
         </button>
       </div>
@@ -37,7 +45,12 @@ const CenterPanelMain = () => {
         </button>
       )}
       {hasEdit && (
-        <button className="text-blue-500 font-bold ml-4 text-xs">수정</button>
+        <button
+          onClick={hasEdit}
+          className="text-blue-500 font-bold ml-4 text-xs"
+        >
+          수정
+        </button>
       )}
     </div>
   );
@@ -64,74 +77,23 @@ const CenterPanelMain = () => {
   };
 
   const DailyReport = () => {
-    const Cell = ({ name, pending }) => {
-      const [checkType, setCheckType] = useState(null);
-      const actionArray = [
-        { type: 0, emoji: "😊", text: "만족" },
-        { type: 1, emoji: "✅", text: "승인" },
-        { type: 2, emoji: "😞", text: "노력바람" },
-      ];
-
-      const ActionButton = ({ type, emoji, text }) => (
-        <button
-          onClick={() => setCheckType(type)}
-          className={`${
-            checkType === type
-              ? "bg-sky-200 border-sky-400"
-              : "hover:bg-gray-100"
-          } h-6 px-1  mt-2 flex items-center justify-center border rounded-lg cursor-pointer`}
-        >
-          <p>{emoji}</p>
-          <p className="text-xs font-bold">{text}</p>
-        </button>
-      );
+    const Cell = ({ name, notUploaded }) => {
       return (
         <div className="py-2 text-sm">
-          <div className="flex items-center space-x-2">
+          <div className="flex items-center space-x-2 mb-3">
             <img src={DefaultUser} className="h-6 w-6 rounded-full" alt="" />
             <p className="font-semibold">{name}</p>
-            {!pending && <p className="text-xs">{moment().fromNow()}</p>}
+            {!notUploaded && <p className="text-xs">{moment().fromNow()}</p>}
           </div>
-          {pending ? (
-            <div className="mt-3 w-72 h-16 bg-gray-100 rounded-xl flex items-center px-4 text-zinc-500">
+          {notUploaded ? (
+            <div className="w-72 h-16 bg-gray-100 rounded-xl flex items-center px-4 text-zinc-500">
               <MdPendingActions size={20} />
               <div className="ml-3">
                 <p className="font-semibold text-xs ">업로드 전</p>
               </div>
             </div>
           ) : (
-            <div className="mt-3 w-72 h-16 bg-white border shadow rounded-xl flex items-center px-4 hover:bg-gray-100 transition cursor-pointer relative">
-              <GrDocumentNotes size={20} />
-              <div className="ml-3">
-                <div className="text-xs font-semibold">
-                  <div className="inline w-4 h-4 bg-red-500"></div>
-                  {"2023년 3월 2일 업무일지"}
-                </div>
-                <div className="text-xs flex text-gray-500 mt-1">
-                  <p className="text-xs">
-                    {moment().format("제출 M월 D일 a h:mm")}
-                  </p>
-                </div>
-              </div>
-
-              {checkType !== null && (
-                <div className="absolute -top-2 right-2 w-8 h-8 rounded-full bg-white shadow border text-lg flex items-center justify-center">
-                  {actionArray[checkType].emoji}
-                </div>
-              )}
-            </div>
-          )}
-          {!pending && (
-            <div className="flex space-x-2 mt-1">
-              {actionArray.map((item) => (
-                <ActionButton
-                  key={item.type}
-                  type={item.type}
-                  emoji={item.emoji}
-                  text={item.text}
-                />
-              ))}
-            </div>
+            <DailyReportCell pending />
           )}
         </div>
       );
@@ -140,7 +102,7 @@ const CenterPanelMain = () => {
     return (
       <div className="flex space-x-4">
         <Cell name={"Sereen"} />
-        <Cell name={"Ahmad"} pending />
+        <Cell name={"Ahmad"} notUploaded />
       </div>
     );
   };
@@ -264,9 +226,26 @@ const CenterPanelMain = () => {
 
   return (
     <div className="w-full h-screen overflow-y-auto">
+      <ModalContainer
+        shouldCloseOnOverlayClick={false}
+        isVisible={goalModalOpen}
+        setVisible={setGoalModalOpen}
+        modalTitle="목표 설정"
+        children={<GoalModal setVisible={setGoalModalOpen} />}
+      />
+      <ModalContainer
+        shouldCloseOnOverlayClick={false}
+        isVisible={milestoneModalOpen}
+        setVisible={setMilestoneModalOpen}
+        modalTitle="직원별 마일스톤 설정"
+        children={<MilestoneModal setVisible={setMilestoneModalOpen} />}
+      />
       <Header />
       <div className="px-8">
-        <TitleText title="단기목표" hasEdit />
+        <TitleText
+          title="직원별 마일스톤"
+          hasEdit={() => setMilestoneModalOpen(true)}
+        />
         <ShortTermGoal />
         <Divider />
         <TitleText title="오늘의 업무일지" path="/main/daily-report" />
