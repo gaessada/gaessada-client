@@ -8,11 +8,13 @@ import ModalContainer from "./ModalContainer";
 import GoalModal from "./modals/GoalModal";
 import MilestoneModal from "./modals/MilestoneModal";
 import DailyReportCell from "./DailyReportCell";
+import RejectFeedbackModal from "./modals/RejectFeedbackModal";
 
 const CenterPanelMain = () => {
   const navigate = useNavigate();
   const [goalModalOpen, setGoalModalOpen] = useState(false);
   const [milestoneModalOpen, setMilestoneModalOpen] = useState(false);
+  const [rejectFeedbackModalOpen, setRejectFeedbackModalOpen] = useState(false);
   const Header = () => (
     <div className="w-full h-14 border-b flex items-center px-8 font-nanum justify-between">
       <div className="flex items-center">
@@ -174,7 +176,7 @@ const CenterPanelMain = () => {
             <button className="w-full h-8 rounded-lg border bg-blue-600 hover:bg-blue-400 text-white font-bold transition">
               승인
             </button>
-            <button className="w-full h-8 rounded-lg border text-red-600 font-bold border-red-300 hover:bg-red-600 hover:text-white transition">
+            <button onClick={() => setRejectFeedbackModalOpen(true)} className="w-full h-8 rounded-lg border text-red-600 font-bold border-red-300 hover:bg-red-600 hover:text-white transition">
               재요청 및 댓글
             </button>
           </div>
@@ -239,6 +241,13 @@ const CenterPanelMain = () => {
         setVisible={setMilestoneModalOpen}
         modalTitle="직원별 마일스톤 설정"
         children={<MilestoneModal setVisible={setMilestoneModalOpen} />}
+      />
+      <ModalContainer
+        shouldCloseOnOverlayClick={false}
+        isVisible={rejectFeedbackModalOpen}
+        setVisible={setRejectFeedbackModalOpen}
+        modalTitle="체크사항 재요청 및 댓글달기"
+        children={<RejectFeedbackModal setVisible={setRejectFeedbackModalOpen} />}
       />
       <Header />
       <div className="px-8">

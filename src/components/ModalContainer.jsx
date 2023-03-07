@@ -42,7 +42,7 @@ const ModalContainer = ({
       }}
       isOpen={isVisible}
     >
-      <div className="w-full h-12 bg-zinc-100 flex border-b px-8 items-center justify-between">
+      <div className="absolute w-full h-12 bg-zinc-100 flex border-b px-8 items-center justify-between z-20">
         <p className="font-bold font-nanum">{modalTitle}</p>
         <button
           onClick={() => setVisible(false)}
@@ -51,7 +51,7 @@ const ModalContainer = ({
           닫기
         </button>
       </div>
-      <div className="flex overflow-y-auto relative w-full h-full">
+      <div className="overflow-y-auto relative w-full h-full pt-12 pb-8 flex-shrink-0">
         {children}
       </div>
     </ReactModal>

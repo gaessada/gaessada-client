@@ -16,7 +16,7 @@ const CompanyModal = () => {
         <p className="text-sm">곽상희 이사</p>
       </div>
       <div className="w-full p-8 mt-4 bg-gray-100 rounded-lg border font-nanum flex space-x-12">
-        <div className="space-y-4 text-sm text-gray-500">
+        <div className="space-y-4 text-sm text-gray-500 flex-shrink-0">
           <p>홈페이지</p>
           <p>산업</p>
           <p>기업구분</p>
