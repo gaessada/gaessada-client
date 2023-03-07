@@ -1,0 +1,29 @@
+.chat-wrapper {
+  width: 100%;
+}
+
+.message-text {
+  min-height: 1em; /* prevent height collapsing when there is no text */
+  max-height: 200px;
+  width: 100%;
+  align-content: center;
+  outline: none;
+  overflow: hidden;
+  padding-left: 60px; /* the container will keep the padding untouched */
+  padding-top: 12px;
+  padding-bottom: 12px;
+}
+
+.message-wrapper {
+  border: 1px solid #e4e7ec;
+  border-radius: 12px;
+  background-color: #f9fafb;
+  max-height: 300px; /* added padding to the height of the .message-text */
+}
+
+div:empty::before {
+  color: grey;
+}
+div[data-placeholder]:not([data-placeholder=""]):empty::before {
+  content: attr(data-placeholder);
+}

@@ -19,7 +19,7 @@ import CompanyModal from "./modals/CompanyModal";
 import MyProfileModal from "./modals/MyProfileModal";
 
 const LeftPanel = () => {
-  const naviate = useNavigate();
+  const navigate = useNavigate();
   const pathname = window.location.pathname; //returns the current url minus the domain name
   const [companyModalOpen, setCompanyModalOpen] = useState(false);
   const [myProfileModalOpen, setMyProfileModalOpen] = useState(false);
@@ -58,7 +58,7 @@ const LeftPanel = () => {
     notificationCount,
   }) => (
     <button
-      onClick={() => naviate(path)}
+      onClick={() => navigate(path)}
       className={`${
         pathname === path ? "bg-gray-100" : "hover:bg-gray-100"
       } w-full h-14 flex items-center px-6 transition font-poppins`}
@@ -99,8 +99,13 @@ const LeftPanel = () => {
     </div>
   );
 
-  const EmployeeCell = ({ name }) => (
-    <button className="w-full h-14 flex items-center px-4 hover:bg-gray-100 transition">
+  const EmployeeCell = ({ name, path }) => (
+    <button
+      onClick={() => navigate(path)}
+      className={`${
+        pathname === path ? "bg-gray-100" : "hover:bg-gray-100"
+      } w-full h-14 flex items-center px-4 transition`}
+    >
       <img
         src={DefaultUser}
         className="w-8 h-8 rounded-full"
@@ -182,8 +187,8 @@ const LeftPanel = () => {
         />
 
         <TitleText title="직원 (2)" />
-        <EmployeeCell name={"Ahmad Algazali"} />
-        <EmployeeCell name={"직원 2"} />
+        <EmployeeCell name={"Ahmad Algazali"} path="/main/chat/0" />
+        <EmployeeCell name={"직원 2"} path="/main/chat/1" />
       </div>
       <div className="pb-3">
         <TitleText title="주요 링크" />

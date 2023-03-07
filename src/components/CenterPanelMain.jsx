@@ -250,7 +250,7 @@ const CenterPanelMain = () => {
         children={<RejectFeedbackModal setVisible={setRejectFeedbackModalOpen} />}
       />
       <Header />
-      <div className="px-8">
+      <div className="px-8 pb-12">
         <TitleText
           title="직원별 마일스톤"
           hasEdit={() => setMilestoneModalOpen(true)}

@@ -4,7 +4,7 @@ import ReactModal from "react-modal";
 const ModalContainer = ({
   isVisible,
   setVisible,
-  width = "40vw",
+  width = "50vw",
   shouldCloseOnOverlayClick = true,
   modalTitle = "기업정보",
   children,
