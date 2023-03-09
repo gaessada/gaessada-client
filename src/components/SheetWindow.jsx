@@ -10,6 +10,12 @@ const SheetWindow = (props) => {
     useEffect(() => {
         props.hotRef.current?.destroy()
 
+        const customStatusEditor = Handsontable.editors.DropdownEditor.prototype.extend();
+        customStatusEditor.prototype.prepare = function (row, col, prop, td, originalValue, cellProperties) {
+            Handsontable.editors.DropdownEditor.prototype.prepare.apply(this, arguments);
+            this.TEXTAREA.readOnly = true
+        };
+
         function statusRenderer(instance, td) {
             Handsontable.renderers.DropdownRenderer.apply(this, arguments)
             customStatusRenderer(arguments[2], arguments[3], arguments[5], td)
@@ -25,8 +31,8 @@ const SheetWindow = (props) => {
             columns: [{
                 data: 'status',
                 type: 'dropdown',
-                editor: 'select',
-                selectOptions: ['진행전', '진행중', '재요청', '승인대기중', '승인완료'],
+                editor: customStatusEditor,
+                source: ['진행전', '진행중', '재요청', '승인대기중', '승인완료'],
                 renderer: statusRenderer
             },
                 {data: 'image', type: 'text', renderer: imageRenderer},
