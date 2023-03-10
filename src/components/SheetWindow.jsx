@@ -16,6 +16,11 @@ const SheetWindow = (props) => {
             this.TEXTAREA.readOnly = true
         };
 
+        const customImageEditor = Handsontable.editors.TextEditor.prototype.extend();
+        customImageEditor.prototype.init = function () {
+            Handsontable.editors.TextEditor.prototype.init.apply(this, arguments);
+        }
+
         function statusRenderer(instance, td) {
             Handsontable.renderers.DropdownRenderer.apply(this, arguments)
             customStatusRenderer(arguments[2], arguments[3], arguments[5], td)
@@ -35,7 +40,7 @@ const SheetWindow = (props) => {
                 source: ['진행전', '진행중', '재요청', '승인대기중', '승인완료'],
                 renderer: statusRenderer
             },
-                {data: 'image', type: 'text', renderer: imageRenderer},
+                {data: 'image', type: 'text', editor: customImageEditor, renderer: imageRenderer},
                 {data: 'description', type: 'text'}],
             colWidths: [1, 3, 6],
             rowHeights: 100,
