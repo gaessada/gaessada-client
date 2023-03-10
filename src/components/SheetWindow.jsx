@@ -87,6 +87,10 @@ const SheetWindow = (props) => {
             minSpareRows: 2,
             contextMenu: ['row_above', 'row_below', 'remove_row'],
         })
+
+        props.hotRef.current.addHook('afterChange', (changes) => {
+            if (!props.hotRef.current.getDataAtRowProp(changes[0][0], 'status')) props.hotRef.current.setDataAtRowProp(changes[0][0], 'status', '진행전')
+        })
     }, [props.hotRef, props.hotRefSize, props.hotDataRef, afterRenderPromise])
 
     return <div ref={containerRef}/>
