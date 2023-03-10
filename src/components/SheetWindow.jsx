@@ -87,7 +87,7 @@ const SheetWindow = (props) => {
             minSpareRows: 2,
             contextMenu: ['row_above', 'row_below', 'remove_row'],
         })
-    }, [props.hotRef, props.hotRefSize, props.hotDataRef])
+    }, [props.hotRef, props.hotRefSize, props.hotDataRef, afterRenderPromise])
 
     return <div ref={containerRef}/>
 }
