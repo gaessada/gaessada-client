@@ -1,11 +1,27 @@
 import Handsontable from 'handsontable';
 import '../css/Handsontable.css'
-import {useEffect, useRef} from "react";
+import {useCallback, useEffect, useRef} from "react";
 import {customImageRenderer, customStatusRenderer} from "../helpers/hotRenderer";
 
 
 const SheetWindow = (props) => {
     const containerRef = useRef(null);
+    const afterRenderPromise = useCallback(() => {
+        return new Promise(resolve => {
+            const timeOut = setTimeout(() => {
+                props.hotRef.current.removeHook('afterRender', afterRenderCallback)
+                resolve()
+            }, 100)
+            const afterRenderCallback = (isForced) => {
+                clearTimeout(timeOut)
+                if (!isForced) {
+                    props.hotRef.current.removeHook('afterRender', afterRenderCallback)
+                    resolve()
+                }
+            }
+            props.hotRef.current?.addHookOnce('afterRender', afterRenderCallback)
+        })
+    }, [props.hotRef])
 
     useEffect(() => {
         props.hotRef.current?.destroy()
@@ -19,6 +35,23 @@ const SheetWindow = (props) => {
         const customImageEditor = Handsontable.editors.TextEditor.prototype.extend();
         customImageEditor.prototype.init = function () {
             Handsontable.editors.TextEditor.prototype.init.apply(this, arguments);
+            this.TEXTAREA_PARENT.addEventListener('paste', (event) => {
+                const items = event.clipboardData.items
+                for (let i = 0; i < items.length; i++) {
+                    if (items[i].kind === 'file' && items[i].type.indexOf('image/') !== -1) {
+                        const blob = items[i].getAsFile()
+                        const url = URL.createObjectURL(blob)
+                        this.TEXTAREA.value = url
+                    }
+                }
+            }, true)
+        }
+        customImageEditor.prototype.finishEditing = function () {
+            Handsontable.editors.TextEditor.prototype.finishEditing.apply(this, arguments);
+            afterRenderPromise().then(() => {
+                    props.hotRef.current.render()
+                }
+            )
         }
 
         function statusRenderer(instance, td) {
