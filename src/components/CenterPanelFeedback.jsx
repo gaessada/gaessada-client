@@ -34,18 +34,22 @@ const CenterPanelFeedback = () => {
     </button>
   );
 
-  const TabButton = ({ title, id, notification }) => (
+  const OptionButton = ({ title, id, notification }) => (
     <button
       onClick={() => setSelectedTab(id)}
-      className={`h-8 flex items-center px-4 transition border rounded-lg relative ${
-        selectedTab === id
-          ? "text-white bg-blue-500 border-blue-500"
-          : "hover:bg-gray-100"
+      className={`h-14 w-20 text-sm font-nanum relative ${
+        selectedTab === id ? "font-bold" : "hover:bg-gray-100"
       }`}
     >
-      <p className={`text-sm font-bold`}>{title}</p>
+      {title}
+      {selectedTab === id && (
+        <div
+          style={{ height: "3px" }}
+          className="absolute bottom-0 w-full bg-black"
+        ></div>
+      )}
       {notification && (
-        <div className="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full"></div>
+        <div className="absolute top-3 right-1 w-2 h-2 bg-red-500 rounded-full"></div>
       )}
     </button>
   );
@@ -53,9 +57,13 @@ const CenterPanelFeedback = () => {
   const Header = () => (
     <div className="w-full h-14 border-b flex items-center px-4 font-nanum justify-between">
       <div className="flex items-center space-x-1">
-        {/* <p className="ml-3 font-bold cursor-default mr-4">체크사항</p> */}
         {tabArray.map((item) => (
-          <TabButton title={item.title} id={item.id} key={item.id} notification={item.notification} />
+          <OptionButton
+            title={item.title}
+            id={item.id}
+            key={item.id}
+            notification={item.notification}
+          />
         ))}
       </div>
       <div className="flex items-center space-x-2">
