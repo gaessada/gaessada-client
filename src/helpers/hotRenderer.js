@@ -10,6 +10,7 @@ export const customImageRenderer = (r, c, v, td) => {
     if (v) {
         const img = document.createElement('IMG')
         img.src = v
+        img.style.width = td.offsetWidth + 'px'
         img.style.margin = 'auto'
         Handsontable.dom.empty(td)
         td.appendChild(img)

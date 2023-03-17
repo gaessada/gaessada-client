@@ -95,6 +95,10 @@ const SheetWindow = (props) => {
         props.hotRef.current.addHook('afterChange', (changes) => {
             if (!props.hotRef.current.getDataAtRowProp(changes[0][0], 'status')) props.hotRef.current.setDataAtRowProp(changes[0][0], 'status', '진행전')
         })
+
+        props.hotRef.current.addHook('afterColumnResize', () => {
+            props.hotRef.current.render()
+        })
     }, [props.hotRef, props.hotRefSize, props.hotDataRef, afterRenderPromise])
 
     return <div ref={containerRef}/>
