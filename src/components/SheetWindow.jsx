@@ -41,7 +41,11 @@ const SheetWindow = (props) => {
                     if (items[i].kind === 'file' && items[i].type.indexOf('image/') !== -1) {
                         const blob = items[i].getAsFile()
                         const url = URL.createObjectURL(blob)
-                        this.TEXTAREA.value = url
+                        if (this.isOpened()) this.setValue(url)
+                        else {
+                            this.beginEditing()
+                            this.setValue(url)
+                        }
                     }
                 }
             }, true)
